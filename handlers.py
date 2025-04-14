@@ -1,7 +1,15 @@
 from aiogram import types, Dispatcher
-from aiogram.types import InputFile, InputMediaPhoto
+from aiogram.types import InputFile, InputMediaPhoto, ReplyKeyboardMarkup, KeyboardButton
 from keyboards import main_menu, sub_menu, back_button
 import os
+
+# Клавиатура с кнопкой "Назад"
+back_to_menu_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="🔙 Назад в главное меню")]
+    ],
+    resize_keyboard=True
+)
 
 async def send_welcome(message: types.Message):
     await message.answer(
@@ -31,22 +39,31 @@ async def main_menu_handler(message: types.Message):
         await message.answer_document(InputFile("files/copa_fit_update.zip"), caption="Файл для обновления")
 
     elif message.text == "Я не знаю какая печь":
-        media = [
-            InputMediaPhoto(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef"),
-            InputMediaPhoto(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef"),
-            InputMediaPhoto(InputFile('images/copa_fit.jpg'), caption="Это Copa Fit"),
-            InputMediaPhoto(InputFile('images/copa.jpg'), caption="Это Copa")
+        media_paths = [
+            ("images/new_merrychef.jpg", "Это Новая Merry Chef"),
+            ("images/old_merrychef.jpg", "Это Старая Merry Chef"),
+            ("images/copa_fit.jpg", "Это Copa Fit"),
+            ("images/copa.jpg", "Это Copa")
         ]
 
-        # Проверяем доступность файлов
-        for file in media:
-            if not os.path.exists(file.media_file.name):
-                await message.answer(f"Файл {file.media_file.name} не найден!")
+        # Проверка существования файлов
+        for path, _ in media_paths:
+            if not os.path.exists(path):
+                await message.answer(f"Файл {path} не найден!")
                 return
 
-        # Отправляем медиа
+        # Анимация "бот загружает фото"
+        await message.chat.do("upload_photo")
+
+        # Создание медиа-группы
+        media = [
+            InputMediaPhoto(media=InputFile(path), caption=caption if idx == 0 else None)
+            for idx, (path, caption) in enumerate(media_paths)
+        ]
+
         try:
             await message.answer_media_group(media)
+            await message.answer("Выберите подходящую печь или вернитесь в меню:", reply_markup=back_to_menu_keyboard)
         except Exception as e:
             await message.answer(f"Произошла ошибка при отправке медиа: {e}")
 
