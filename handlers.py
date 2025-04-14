@@ -20,23 +20,23 @@ async def send_welcome(message: types.Message):
 async def main_menu_handler(message: types.Message):
     if message.text.startswith("1. Merry Chef Новая"):
         await message.answer("Вы выбрали: Merry Chef Новая", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/merry_new_setting.jpg"), caption="Инструкция по обновлению")
-        await message.answer_document(InputFile("files/merry_new_update.zip"), caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/merry_new_setting.jpg"), caption="Как скачать на флешку")
+        await message.answer_document("https://disk.yandex.ru/d/e2SUBFMC_vHNPQ", caption="Файл для обновления")
 
     elif message.text.startswith("2. Merry Chef Старая"):
         await message.answer("Вы выбрали: Merry Chef Старая", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/merry_old_setting.jpg"), caption="Инструкция по обновлению")
-        await message.answer_document(InputFile("files/merry_old_update.zip"), caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/merry_old_setting.jpg"), caption="Как скачать на флешку")
+        await message.answer_document("https://disk.yandex.ru/d/SgDZr_kvyLXmXA", caption="Файл для обновления")
 
     elif message.text.startswith("3. Copa"):
         await message.answer("Вы выбрали: Copa", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/copa_setting.jpg"), caption="Инструкция по обновлению")
-        await message.answer_document(InputFile("files/copa_old_update.zip"), caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/copa_setting.jpg"), caption="Как скачать на флешку")
+        await message.answer_document("https://disk.yandex.ru/d/mVUGuhpj6o1TkA", caption="Файл для обновления")
 
     elif message.text.startswith("4. Copa FIT"):
         await message.answer("Вы выбрали: Copa FIT", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/copafitsetting.jpg"), caption="Инструкция по обновлению")
-        await message.answer_document(InputFile("files/copa_fit_update.zip"), caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/copafitsetting.jpg"), caption="Как скачать на флешку")
+        await message.answer_document("https://disk.yandex.ru/d/VxRp_sjVTH-fjw", caption="Файл для обновления")
 
     elif message.text == "Я не знаю какая печь":
         media_paths = [
