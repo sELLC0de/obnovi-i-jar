@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: telegram-bot
+    env: python
+    buildCommand: ""
+    startCommand: python main.py
+    envVars:
+      - key: API_TOKEN
+        value: 7807585583:AAHn3iMpPTjggU0A9OJF0lAEpXeGbwnPQek
