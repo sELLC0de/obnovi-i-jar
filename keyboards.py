@@ -7,7 +7,10 @@ main_menu.add(
 )
 main_menu.add(
     KeyboardButton("3. Copa"),
-    KeyboardButton("4. Copa Feed")
+    KeyboardButton("4. Copa FIT")
+)
+main_menu.add(
+    KeyboardButton("Я не знаю какая печь")
 )
 
 back_button = ReplyKeyboardMarkup(resize_keyboard=True).add(KeyboardButton("🔙 Назад в главное меню"))
