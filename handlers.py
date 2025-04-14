@@ -80,6 +80,13 @@ async def main_menu_handler(message: types.Message):
         except Exception as e:
             await message.answer(f"Произошла ошибка при отправке медиа: {e}")
 
+    elif message.text == "📘 Как скачать на флешку":
+        image_path = "images/orig.jpg"
+        if os.path.exists(image_path):
+            await message.answer_photo(InputFile(image_path), caption="Вот как записать файл на флешку 💾")
+        else:
+            await message.answer("Изображение не найдено!")
+
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
 
