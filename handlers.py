@@ -23,14 +23,14 @@ async def main_menu_handler(message: types.Message):
         media = types.MediaGroup()
         media.attach_photo(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef")
         media.attach_photo(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef")
-        media.attach_photo(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit")
-        media.attach_photo(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
+        media.attach_photo(InputFile('images/copa.jpg'), caption="Это Copa")
+        media.attach_photo(InputFile('images/copa_fit.jpg'), caption="Это Copa Fit")
         await message.answer_media_group(media)
 
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
     elif message.text == "📘 Инструкция по обновлению":
-        photo = InputFile("photos/merry_new.jpg")
+        photo = InputFile("images/merry_new.jpg")
         await message.answer_photo(photo, caption="Инструкция по обновлению")
     elif message.text == "📁 Файл для обновления":
         update_file = InputFile("files/merry_new_update.zip")
