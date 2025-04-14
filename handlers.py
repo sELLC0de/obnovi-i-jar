@@ -1,6 +1,7 @@
 from aiogram import types, Dispatcher
 from aiogram.types import InputFile, InputMediaPhoto
 from keyboards import main_menu, sub_menu, back_button
+import os
 
 async def send_welcome(message: types.Message):
     await message.answer(
@@ -36,7 +37,18 @@ async def main_menu_handler(message: types.Message):
             InputMediaPhoto(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit"),
             InputMediaPhoto(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
         ]
-        await message.answer_media_group(media)
+
+        # Проверяем доступность файлов
+        for file in media:
+            if not os.path.exists(file.media_file.name):
+                await message.answer(f"Файл {file.media_file.name} не найден!")
+                return
+
+        # Отправляем медиа
+        try:
+            await message.answer_media_group(media)
+        except Exception as e:
+            await message.answer(f"Произошла ошибка при отправке медиа: {e}")
 
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
