@@ -1,13 +1,13 @@
 from aiogram import Dispatcher, types
 from aiogram.types import InputFile
-from keyboards import main_menu, sub_menu, back_button, main_keyboard  # убедись, что есть main_keyboard
+from keyboards import main_menu, sub_menu, back_button
 
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
-    await message.answer(
-        "Привет! Я бот-помощник по обновлению печей проекта \"Сгоряча\"\n\nВыберите Вашу печку:",
-        reply_markup=main_keyboard()
-    )
+  await message.answer(
+    "Привет! Я бот-помощник по обновлению печей проекта \"Сгоряча\"\n\nВыберите Вашу печку:",
+    reply_markup=main_menu
+)
 
 async def main_menu_handler(message: types.Message):
     if message.text.startswith("1. Merry Chef Новая"):
