@@ -46,26 +46,16 @@ async def main_menu_handler(message: types.Message):
             ("images/copa.jpg", "Это Copa")
         ]
 
-        # Проверка существования файлов
-        for path, _ in media_paths:
+        # Проверка и отправка каждого изображения по отдельности
+        for path, caption in media_paths:
             if not os.path.exists(path):
                 await message.answer(f"Файл {path} не найден!")
                 return
 
-        # Анимация "бот загружает фото"
-        await message.chat.do("upload_photo")
+            await message.chat.do("upload_photo")  # Анимация загрузки
+            await message.answer_photo(InputFile(path), caption=caption)
 
-        # Создание медиа-группы
-        media = [
-            InputMediaPhoto(media=InputFile(path), caption=caption if idx == 0 else None)
-            for idx, (path, caption) in enumerate(media_paths)
-        ]
-
-        try:
-            await message.answer_media_group(media)
-            await message.answer("Выберите подходящую печь или вернитесь в меню:", reply_markup=back_to_menu_keyboard)
-        except Exception as e:
-            await message.answer(f"Произошла ошибка при отправке медиа: {e}")
+        await message.answer("Выберите подходящую печь или вернитесь в меню:", reply_markup=back_to_menu_keyboard)
 
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
