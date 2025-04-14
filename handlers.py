@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from aiogram.types import InputFile
+from aiogram.types import InputFile, InputMediaPhoto
 from keyboards import main_menu, sub_menu, back_button
 
 async def send_welcome(message: types.Message):
@@ -30,11 +30,12 @@ async def main_menu_handler(message: types.Message):
         await message.answer_document(InputFile("files/copa_fit_update.zip"), caption="Файл для обновления")
 
     elif message.text == "Я не знаю какая печь":
-        media = types.MediaGroup()
-        media.attach_photo(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef")
-        media.attach_photo(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef")
-        media.attach_photo(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit")
-        media.attach_photo(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
+        media = [
+            InputMediaPhoto(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef"),
+            InputMediaPhoto(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef"),
+            InputMediaPhoto(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit"),
+            InputMediaPhoto(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
+        ]
         await message.answer_media_group(media)
 
     elif message.text == "🔙 Назад в главное меню":
