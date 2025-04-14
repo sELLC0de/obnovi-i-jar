@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 main_menu = ReplyKeyboardMarkup(resize_keyboard=True)
 main_menu.add(
@@ -15,10 +15,9 @@ main_menu.add(
 
 back_button = ReplyKeyboardMarkup(resize_keyboard=True).add(KeyboardButton("🔙 Назад в главное меню"))
 
-# Обновлённое подменю
-sub_menu = ReplyKeyboardMarkup(resize_keyboard=True)
+sub_menu = InlineKeyboardMarkup(row_width=1)
 sub_menu.add(
-    KeyboardButton("📘 Как скачать на флешку"),
-    KeyboardButton("🆘 Получить помощь", url="https://t.me/rn_star")
+    InlineKeyboardButton("📘 Как скачать на флешку", callback_data="download_info"),
+    InlineKeyboardButton("🆘 Получить помощь", url="https://t.me/rn_star"),
+    InlineKeyboardButton("🔙 Назад в главное меню", callback_data="back_to_main")
 )
-sub_menu.add(KeyboardButton("🔙 Назад в главное меню"))
