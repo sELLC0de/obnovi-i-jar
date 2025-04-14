@@ -17,7 +17,7 @@ back_button = ReplyKeyboardMarkup(resize_keyboard=True).add(KeyboardButton("🔙
 
 sub_menu = ReplyKeyboardMarkup(resize_keyboard=True)
 sub_menu.add(
-    KeyboardButton("📘 Инструкция по обновлению"),
+    KeyboardButton("📘 Как скачать на флешку"),
     KeyboardButton("📁 Файл для обновления")
 )
 sub_menu.add(KeyboardButton("🔙 Назад в главное меню"))
