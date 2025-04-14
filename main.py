@@ -6,7 +6,7 @@ import os
 
 from aiohttp import web  # добавим веб-сервер
 
-API_TOKEN = os.getenv("7807585583:AAHn3iMpPTjggU0A9OJF0lAEpXeGbwnPQek")
+API_TOKEN = os.getenv("API_TOKEN")
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
