@@ -15,9 +15,10 @@ main_menu.add(
 
 back_button = ReplyKeyboardMarkup(resize_keyboard=True).add(KeyboardButton("🔙 Назад в главное меню"))
 
+# Обновлённое подменю
 sub_menu = ReplyKeyboardMarkup(resize_keyboard=True)
 sub_menu.add(
     KeyboardButton("📘 Как скачать на флешку"),
-    KeyboardButton("📁 Файл для обновления")
+    KeyboardButton("🆘 Получить помощь", url="https://t.me/rn_star")
 )
 sub_menu.add(KeyboardButton("🔙 Назад в главное меню"))
