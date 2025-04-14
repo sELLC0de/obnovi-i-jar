@@ -34,8 +34,8 @@ async def main_menu_handler(message: types.Message):
         media = [
             InputMediaPhoto(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef"),
             InputMediaPhoto(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef"),
-            InputMediaPhoto(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit"),
-            InputMediaPhoto(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
+            InputMediaPhoto(InputFile('images/copa_fit.jpg'), caption="Это Copa Fit"),
+            InputMediaPhoto(InputFile('images/copa.jpg'), caption="Это Copa")
         ]
 
         # Проверяем доступность файлов
