@@ -1,9 +1,13 @@
 from aiogram import Dispatcher, types
 from aiogram.types import InputFile
-from keyboards import main_menu, sub_menu, back_button
+from keyboards import main_menu, sub_menu, back_button, main_keyboard  # убедись, что есть main_keyboard
 
-async def start(message: types.Message):
-    await message.answer("Выберите Вашу печку:", reply_markup=main_menu)
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    await message.answer(
+        "Привет! Я бот-помощник по обновлению печей проекта \"Сгоряча\"\n\nВыберите Вашу печку:",
+        reply_markup=main_keyboard()
+    )
 
 async def main_menu_handler(message: types.Message):
     if message.text.startswith("1. Merry Chef Новая"):
@@ -12,20 +16,29 @@ async def main_menu_handler(message: types.Message):
         await message.answer("Вы выбрали: Merry Chef Старая", reply_markup=sub_menu)
     elif message.text.startswith("3. Copa"):
         await message.answer("Вы выбрали: Copa", reply_markup=sub_menu)
-    elif message.text.startswith("4. Copa Feed"):
-        await message.answer("Вы выбрали: Copa Feed", reply_markup=sub_menu)
+    elif message.text.startswith("4. Copa FIT"):
+        await message.answer("Вы выбрали: Copa FIT", reply_markup=sub_menu)
+
+    elif message.text == "Я не знаю какая печь":
+        media = types.MediaGroup()
+        media.attach_photo(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef")
+        media.attach_photo(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef")
+        media.attach_photo(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit")
+        media.attach_photo(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
+        await message.answer_media_group(media)
+
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
     elif message.text == "📘 Инструкция по обновлению":
-        # Пример: отправка изображения
-        photo = InputFile("photos/merry_new.jpg")  # <-- путь к нужному файлу
+        photo = InputFile("photos/merry_new.jpg")
         await message.answer_photo(photo, caption="Инструкция по обновлению")
     elif message.text == "📁 Файл для обновления":
-        update_file = InputFile("files/merry_new_update.zip")  # <-- путь к нужному файлу
+        update_file = InputFile("files/merry_new_update.zip")
         await message.answer_document(update_file, caption="Вот файл для обновления.")
     else:
         await message.answer("Я не понял команду. Пожалуйста, выберите пункт из меню.")
 
+
 def register_handlers(dp: Dispatcher):
-    dp.register_message_handler(start, commands=["start"])
+    dp.register_message_handler(send_welcome, commands=["start"])
     dp.register_message_handler(main_menu_handler)
