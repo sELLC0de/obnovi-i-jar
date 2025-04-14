@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.utils import executor
 from handlers import register_handlers
 
-API_TOKEN = 'YOUR_BOT_TOKEN'  # <-- вставь сюда токен от BotFather
+API_TOKEN = '7807585583:AAHn3iMpPTjggU0A9OJF0lAEpXeGbwnPQek' 
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
