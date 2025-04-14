@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from aiogram.types import InputFile, InputMediaPhoto, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InputFile, InputMediaPhoto, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards import main_menu, sub_menu, back_button
 import os
 
@@ -20,23 +20,39 @@ async def send_welcome(message: types.Message):
 async def main_menu_handler(message: types.Message):
     if message.text.startswith("1. Merry Chef Новая"):
         await message.answer("Вы выбрали: Merry Chef Новая", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/merry_new_setting.jpg"), caption="Как скачать на флешку")
-        await message.answer_document("https://disk.yandex.ru/d/e2SUBFMC_vHNPQ", caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/merry_new_setting.jpg"), caption="Инструкция по обновлению")
+
+        link_keyboard = InlineKeyboardMarkup().add(
+            InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/e2SUBFMC_vHNPQ")
+        )
+        await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("2. Merry Chef Старая"):
         await message.answer("Вы выбрали: Merry Chef Старая", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/merry_old_setting.jpg"), caption="Как скачать на флешку")
-        await message.answer_document("https://disk.yandex.ru/d/SgDZr_kvyLXmXA", caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/merry_old_setting.jpg"), caption="Инструкция по обновлению")
+
+        link_keyboard = InlineKeyboardMarkup().add(
+            InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/SgDZr_kvyLXmXA")
+        )
+        await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("3. Copa"):
         await message.answer("Вы выбрали: Copa", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/copa_setting.jpg"), caption="Как скачать на флешку")
-        await message.answer_document("https://disk.yandex.ru/d/mVUGuhpj6o1TkA", caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/copa_setting.jpg"), caption="Инструкция по обновлению")
+
+        link_keyboard = InlineKeyboardMarkup().add(
+            InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/mVUGuhpj6o1TkA")
+        )
+        await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("4. Copa FIT"):
         await message.answer("Вы выбрали: Copa FIT", reply_markup=sub_menu)
-        await message.answer_photo(InputFile("images/copafitsetting.jpg"), caption="Как скачать на флешку")
-        await message.answer_document("https://disk.yandex.ru/d/VxRp_sjVTH-fjw", caption="Файл для обновления")
+        await message.answer_photo(InputFile("images/copafitsetting.jpg"), caption="Инструкция по обновлению")
+
+        link_keyboard = InlineKeyboardMarkup().add(
+            InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/VxRp_sjVTH-fjw")
+        )
+        await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text == "Я не знаю какая печь":
         media_paths = [
@@ -46,16 +62,23 @@ async def main_menu_handler(message: types.Message):
             ("images/copa.jpg", "Это Copa")
         ]
 
-        # Проверка и отправка каждого изображения по отдельности
-        for path, caption in media_paths:
+        for path, _ in media_paths:
             if not os.path.exists(path):
                 await message.answer(f"Файл {path} не найден!")
                 return
 
-            await message.chat.do("upload_photo")  # Анимация загрузки
-            await message.answer_photo(InputFile(path), caption=caption)
+        await message.chat.do("upload_photo")
 
-        await message.answer("Выберите подходящую печь или вернитесь в меню:", reply_markup=back_to_menu_keyboard)
+        media = [
+            InputMediaPhoto(media=InputFile(path), caption=caption if idx == 0 else None)
+            for idx, (path, caption) in enumerate(media_paths)
+        ]
+
+        try:
+            await message.answer_media_group(media)
+            await message.answer("Выберите подходящую печь или вернитесь в меню:", reply_markup=back_to_menu_keyboard)
+        except Exception as e:
+            await message.answer(f"Произошла ошибка при отправке медиа: {e}")
 
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
