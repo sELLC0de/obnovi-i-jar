@@ -26,6 +26,8 @@ async def main_menu_handler(message: types.Message):
         link_keyboard = types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/e2SUBFMC_vHNPQ")
         )
+        link_keyboard.inline_keyboard += sub_menu.inline_keyboard  # добавляем кнопки из sub_menu
+
         await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("2. Merry Chef Старая"):
@@ -35,6 +37,8 @@ async def main_menu_handler(message: types.Message):
         link_keyboard = types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/SgDZr_kvyLXmXA")
         )
+        link_keyboard.inline_keyboard += sub_menu.inline_keyboard  # добавляем кнопки из sub_menu
+
         await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("3. Copa"):
@@ -44,6 +48,8 @@ async def main_menu_handler(message: types.Message):
         link_keyboard = types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/mVUGuhpj6o1TkA")
         )
+        link_keyboard.inline_keyboard += sub_menu.inline_keyboard  # добавляем кнопки из sub_menu
+
         await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text.startswith("4. Copa FIT"):
@@ -53,6 +59,8 @@ async def main_menu_handler(message: types.Message):
         link_keyboard = types.InlineKeyboardMarkup().add(
             types.InlineKeyboardButton("📁 Файл для обновления", url="https://disk.yandex.ru/d/VxRp_sjVTH-fjw")
         )
+        link_keyboard.inline_keyboard += sub_menu.inline_keyboard  # добавляем кнопки из sub_menu
+
         await message.answer("Нажмите кнопку ниже, чтобы скачать файл:", reply_markup=link_keyboard)
 
     elif message.text == "Я не знаю какая печь":
