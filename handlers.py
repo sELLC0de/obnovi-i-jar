@@ -12,32 +12,37 @@ async def send_welcome(message: types.Message):
 async def main_menu_handler(message: types.Message):
     if message.text.startswith("1. Merry Chef Новая"):
         await message.answer("Вы выбрали: Merry Chef Новая", reply_markup=sub_menu)
+        await message.answer_photo(InputFile("images/merry_new.jpg"), caption="Инструкция по обновлению")
+        await message.answer_document(InputFile("files/merry_new_update.zip"), caption="Файл для обновления")
+
     elif message.text.startswith("2. Merry Chef Старая"):
         await message.answer("Вы выбрали: Merry Chef Старая", reply_markup=sub_menu)
+        await message.answer_photo(InputFile("images/merry_old.jpg"), caption="Инструкция по обновлению")
+        await message.answer_document(InputFile("files/merry_old_update.zip"), caption="Файл для обновления")
+
     elif message.text.startswith("3. Copa"):
         await message.answer("Вы выбрали: Copa", reply_markup=sub_menu)
+        await message.answer_photo(InputFile("images/copa_old.jpg"), caption="Инструкция по обновлению")
+        await message.answer_document(InputFile("files/copa_old_update.zip"), caption="Файл для обновления")
+
     elif message.text.startswith("4. Copa FIT"):
         await message.answer("Вы выбрали: Copa FIT", reply_markup=sub_menu)
+        await message.answer_photo(InputFile("images/copasetting.jpg"), caption="Инструкция по обновлению")
+        await message.answer_document(InputFile("files/copa_fit_update.zip"), caption="Файл для обновления")
 
     elif message.text == "Я не знаю какая печь":
         media = types.MediaGroup()
         media.attach_photo(InputFile('images/new_merrychef.jpg'), caption="Это Новая Merry Chef")
         media.attach_photo(InputFile('images/old_merrychef.jpg'), caption="Это Старая Merry Chef")
-        media.attach_photo(InputFile('images/copa.jpg'), caption="Это Copa")
-        media.attach_photo(InputFile('images/copa_fit.jpg'), caption="Это Copa Fit")
+        media.attach_photo(InputFile('images/new_copa_fit.jpg'), caption="Это Новая Copa Fit")
+        media.attach_photo(InputFile('images/old_copa_fit.jpg'), caption="Это Старая Copa Fit")
         await message.answer_media_group(media)
 
     elif message.text == "🔙 Назад в главное меню":
         await message.answer("Вы вернулись в главное меню. Выберите Вашу печку:", reply_markup=main_menu)
-    elif message.text == "📘 Инструкция по обновлению":
-        photo = InputFile("images/merry_new.jpg")
-        await message.answer_photo(photo, caption="Инструкция по обновлению")
-    elif message.text == "📁 Файл для обновления":
-        update_file = InputFile("files/merry_new_update.zip")
-        await message.answer_document(update_file, caption="Вот файл для обновления.")
+
     else:
         await message.answer("Я не понял команду. Пожалуйста, выберите пункт из меню.")
-
 
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(send_welcome, commands=["start"])
